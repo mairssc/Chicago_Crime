@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 600px;
+    margin: auto;
+}
+
+.block {
+    height: 500px;
+    background-color: royalblue;
+    align-self: flex-end;
+}
