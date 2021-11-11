@@ -89,6 +89,7 @@ function analysis(dataWard, dataCrime) {
     
     // Key for wardDic is ward number, key is the row for that ward's demographics
     let wardDemoDic = getDictByWard(wardArr, 1, wardWardIndex)
+    console.log(wardDemoDic)
     
     // Key for columnDic is column index of crimeArr. Value is column value
     let crimeColDic = getColumnDic(crimeArr[0]);

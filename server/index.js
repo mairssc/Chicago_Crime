@@ -1,5 +1,5 @@
 //Running home.html and favorite.html via port
-//Ex: http://localhost:8080/home.html will run home.html
+//Ex: http://localhost:8080/index.html will run home.html
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -15,21 +15,6 @@ wardDemoDic = items[1]
 crimeColDic = items[2]
 wardCrimeDic = items[3]
 sortedWardCount = items[4]
-
-// const mongoose = require('mongoose');
-// const { response } = require('express');
-// const url = 'mongodb://127.0.0.1:27017/node-mongo-hw' // change this as needed
-
-// mongoose.connect(url, { useNewUrlParser: true })
-
-// const db = mongoose.connection
-// db.once('open', _ => {
-//   console.log('Database connected:', url)
-// })
-
-// db.on('error', err => {
-//   console.error('connection error:', err)
-// })
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));

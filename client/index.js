@@ -1,6 +1,8 @@
 // barChart = document.getElementById('charts');
 
 // FIX INDEXING FOR DICTIONARIES
+// Currently wardDemo is a dict of indices which have a single index array
+// which then leads to an array
 
 getData()
 async function getData() {
@@ -16,5 +18,5 @@ async function getData() {
     for (var i = 0; i < sortedWardCount.length; i++) {
         countVals[i] = wardCrimeDic[countVals[i]].length
     }
-    console.log(wardDemoDic[3])
+    console.log(wardDemoDic)
 }
