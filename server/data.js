@@ -56,52 +56,56 @@ function mergeSort(arr, dic) {
 //////////////////////////////////////////////////
 
 
-fs.readFile('../ward.csv', 'utf8', (err, dataWard) => {
-    if (err) {
-      console.error(err)
-      return
+
+function dataWard() {
+    return fs.readFileSync('../ward.csv', 'utf8')
+}
+
+function dataCrime() {
+    return fs.readFileSync('../crime.csv', 'utf8')
+}
+
+function analysis(dataWard, dataCrime) {
+    var wardFileDict = papa.parse(dataWard, {
+        complete: function(results) {
+            console.log("finished ward csv")
+        }
+    });
+    var crimeFileDict = papa.parse(dataCrime, {
+        complete: function(results) {
+            console.log("finished crime csv")
+        }
+    });
+    let wardArr = wardFileDict['data'];
+    
+    let crimeArr = crimeFileDict['data'];
+    
+    let crimeWardIndex = 10;
+    
+    let wardWardIndex = 1
+    
+    // Key for columnDic is column index of wardArr
+    let wardColDic = getColumnDic(wardArr[0])
+    
+    // Key for wardDic is ward number, key is the row for that ward's demographics
+    let wardDemoDic = getDictByWard(wardArr, 1, wardWardIndex)
+    
+    // Key for columnDic is column index of crimeArr. Value is column value
+    let crimeColDic = getColumnDic(crimeArr[0]);
+    
+    
+    // Key for wardDic is ward number, key is the row for that crime's information
+    let wardCrimeDic = getDictByWard(crimeArr, 1, crimeWardIndex);
+    let countCrimes = [];
+    for (let i = 1; i < 51; i++) {
+        countCrimes.push(i)
     }
-    fs.readFile('../crime.csv', 'utf8', (err, dataCrime) => {
-        if (err) {
-          console.error(err)
-          return
-        }
-        var wardFileDict = papa.parse(dataWard, {
-            complete: function(results) {
-                console.log("finished ward csv")
-            }
-        });
-        var crimeFileDict = papa.parse(dataCrime, {
-            complete: function(results) {
-                console.log("finished crime csv")
-            }
-        });
-        let wardArr = wardFileDict['data'];
-
-        let crimeArr = crimeFileDict['data'];
-
-        let crimeWardIndex = 10;
-
-        let wardWardIndex = 1
-
-        // Key for columnDic is column index of wardArr
-        let wardColDic = getColumnDic(wardArr[0])
     
-        // Key for wardDic is ward number, key is the row for that ward's demographics
-        let wardDemoDic = getDictByWard(wardArr, 1, wardWardIndex)
-    
-        // Key for columnDic is column index of crimeArr. Value is column value
-        let crimeColDic = getColumnDic(crimeArr[0]);
-    
+    //contains ward indices as values sorted descending big => small
+    let sortedWardCount = mergeSort(countCrimes, wardCrimeDic)
+    return [wardColDic, wardDemoDic, crimeColDic, wardCrimeDic, sortedWardCount]
+}
 
-        // Key for wardDic is ward number, key is the row for that crime's information
-        let wardCrimeDic = getDictByWard(crimeArr, 1, crimeWardIndex);
-        let countCrimes = [];
-        for (let i = 1; i < 51; i++) {
-            countCrimes.push(i)
-        }
-
-        //contains ward indices as values sorted descending big => small
-        let sortedWardCount = mergeSort(countCrimes, wardCrimeDic)
-    })
-})
+module.exports = {
+    analysis, dataCrime, dataWard
+}
